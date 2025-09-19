@@ -1,0 +1,7 @@
+*agentcore.yaml
+.dockerignore
+Dockerfile
+strands_agents_openai.py
+*.bk
+mcp_server.py
+my_mcp_client*.py
