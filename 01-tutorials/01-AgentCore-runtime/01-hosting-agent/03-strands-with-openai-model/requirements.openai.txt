@@ -1,0 +1,10 @@
+strands-agents
+strands-agents-tools
+strands-agents[openai]
+uv
+boto3
+starlette
+bedrock-agentcore
+aws-opentelemetry-distro-genai-beta
+bedrock-agentcore-starter-toolkit
+uvicorn
