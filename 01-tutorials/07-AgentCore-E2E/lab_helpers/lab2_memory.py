@@ -182,6 +182,11 @@ class CustomerSupportMemoryHooks(HookProvider):
         registry.add_callback(MessageAddedEvent, self.retrieve_customer_context)
         registry.add_callback(AfterInvocationEvent, self.save_support_interaction)
         logger.info("Customer support memory hooks registered")
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 1bf9309 (complete run)
 
 
 def get_memory_hooks():
@@ -194,4 +199,9 @@ def get_memory_hooks():
         session_id=SESSION_ID,
     )
 
+<<<<<<< HEAD
     return memory_hooks
+=======
+    return memory_hooks
+>>>>>>> c83dfdc (complete run)
+>>>>>>> 1bf9309 (complete run)
