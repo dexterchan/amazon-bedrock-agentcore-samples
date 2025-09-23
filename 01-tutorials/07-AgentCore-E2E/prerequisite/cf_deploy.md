@@ -2,9 +2,9 @@
 
 ## 1. Pack the lambda package
 ```
-cd lambda
-zip -r ../lambda-code.zip . -x "python/ddgs-layer.zip"
-cd ..
+pushd lambda/python
+zip -r ../../lambda-code.zip . -x "ddgs-layer.zip"
+popd
 ```
 
 ### 2. Upload both files to S3
@@ -13,7 +13,7 @@ Here, please inject the lambda name as you want.
 LAMBDA_NAME={your lambda name}-agentcore-e2e-lambda
 aws s3 mb s3://${LAMBDA_NAME}
 aws s3 cp lambda-code.zip s3://${LAMBDA_NAME}/
-aws s3 cp lambda/python/ddgs-layer.zip s3://${LAMBDA_NAME}/python/ddgs-layer.
+aws s3 cp lambda/python/ddgs-layer.zip s3://${LAMBDA_NAME}/python/ddgs-layer.zip
 ```
 
 

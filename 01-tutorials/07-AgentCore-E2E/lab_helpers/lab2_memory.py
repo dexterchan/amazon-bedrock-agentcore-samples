@@ -187,7 +187,7 @@ class CustomerSupportMemoryHooks(HookProvider):
 def get_memory_hooks():
     """Setup memory resource and return Memory hooks for agent"""
     memory_id = create_or_get_memory_resource()
-    memory_hooks = MemoryHook(
+    memory_hooks = CustomerSupportMemoryHooks(
         memory_client=memory_client,
         memory_id=memory_id,
         actor_id=ACTOR_ID,

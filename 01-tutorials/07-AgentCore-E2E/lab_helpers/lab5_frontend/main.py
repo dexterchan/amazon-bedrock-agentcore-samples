@@ -222,14 +222,14 @@ if prompt := st.chat_input("What is up?"):
         st.rerun()
 
         
-        accumulated_response = chat_manager.invoke_endpoint_nostreaming( agent_arn=st.session_state["agent_arn"],
-            payload=payload,
-            bearer_token=st.session_state["auth_access_token"],
-            session_id=st.session_state["session_id"]
-        )
+        # accumulated_response = chat_manager.invoke_endpoint_nostreaming( agent_arn=st.session_state["agent_arn"],
+        #     payload=payload,
+        #     bearer_token=st.session_state["auth_access_token"],
+        #     session_id=st.session_state["session_id"]
+        # )
 
 
-        print(f"Response: {accumulated_response}")
-        # Add assistant response to chat history
-        st.session_state.messages.append({"role": "assistant", "content": accumulated_response})
+        # print(f"Response: {accumulated_response}")
+        # # Add assistant response to chat history
+        # st.session_state.messages.append({"role": "assistant", "content": accumulated_response})
 
