@@ -1,10 +1,17 @@
 strands-agents
 strands-agents-tools
+<<<<<<< HEAD
 boto3>=1.40.8
 botocore>=1.40.8
 bedrock-agentcore<=0.1.5
 bedrock-agentcore-starter-toolkit==0.1.14
+=======
+boto3==1.40.47
+botocore==1.40.47
+bedrock-agentcore==0.1.7
+bedrock-agentcore-starter-toolkit==0.1.22
+>>>>>>> b980282 (chore (workshop-e2e): update toolkit version and update cleanup resources step (#466))
 aws-opentelemetry-distro
 ddgs
-aws-opentelemetry-distro~=0.10.1
+aws-opentelemetry-distro~=0.12.1
 pyyaml

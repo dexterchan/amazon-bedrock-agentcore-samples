@@ -579,6 +579,7 @@ def delete_agentcore_runtime_execution_role():
     except Exception as e:
         print(f"❌ Error during cleanup: {str(e)}")
 
+<<<<<<< HEAD
 def agentcore_memory_cleanup():
     
     control_client = boto3.client('bedrock-agentcore-control',region_name=REGION)
@@ -630,6 +631,59 @@ def gateway_target_cleanup():
     )
     response = gateway_client.list_gateways() 
     gateway_id = (response['items'][0]['gatewayId'])
+=======
+
+def agentcore_memory_cleanup(memory_id: str = None):
+    """List all memories and their associated strategies"""
+    control_client = boto3.client("bedrock-agentcore-control", region_name=REGION)
+    if memory_id:
+        response = control_client.delete_memory(memoryId=memory_id)
+        print(f"✅ Successfully deleted memory: {memory_id}")
+    else:
+        next_token = None
+        while True:
+            # Build request parameters
+            params = {}
+            if next_token:
+                params["nextToken"] = next_token
+
+            # List memories
+            try:
+                response = control_client.list_memories(**params)
+
+                # Process each memory
+                for memory in response.get("memories", []):
+                    memory_id = memory.get("id")
+                    print(f"\nMemory ID: {memory_id}")
+                    print(f"Status: {memory.get('status')}")
+                    response = control_client.delete_memory(memoryId=memory_id)
+                    response = control_client.list_memories(**params)
+                    print(f"✅ Successfully deleted memory: {memory_id}")
+
+                response = control_client.list_memories(**params)
+                # Process each memory status
+                for memory in response.get("memories", []):
+                    memory_id = memory.get("id")
+                    print(f"\nMemory ID: {memory_id}")
+                    print(f"Status: {memory.get('status')}")
+
+            except Exception as e:
+                print(f"⚠️  Error getting memory details: {e}")
+            # Check for more results
+            next_token = response.get("nextToken")
+            if not next_token:
+                break
+
+
+def gateway_target_cleanup(gateway_id: str = None):
+    if not gateway_id:
+        gateway_client = boto3.client(
+            "bedrock-agentcore-control",
+            region_name=REGION,
+        )
+        response = gateway_client.list_gateways()
+        gateway_id = response["items"][0]["gatewayId"]
+>>>>>>> b980282 (chore (workshop-e2e): update toolkit version and update cleanup resources step (#466))
     print(f"🗑️  Deleting all targets for gateway: {gateway_id}")
     
     # List and delete all targets
@@ -650,6 +704,7 @@ def gateway_target_cleanup():
     gateway_client.delete_gateway(gatewayIdentifier=gateway_id)
     print(f"✅ Gateway {gateway_id} deleted successfully")
 
+<<<<<<< HEAD
 def runtime_resource_cleanup():
     try:
         # Initialize AWS clients
@@ -665,6 +720,33 @@ def runtime_resource_cleanup():
             )
             print(f"  ✅ Agent runtime deleted: {response['status']}")
         
+=======
+
+def runtime_resource_cleanup(runtime_arn: str = None):
+    try:
+        # Initialize AWS clients
+        agentcore_control_client = boto3.client(
+            "bedrock-agentcore-control", region_name=REGION
+        )
+        if runtime_arn:
+            runtime_id = runtime_arn.split(":")[-1].split("/")[-1]
+            response = agentcore_control_client.delete_agent_runtime(
+                agentRuntimeId=runtime_id
+            )
+            print(f"  ✅ Agent runtime deleted: {response['status']}")
+        else:
+            ecr_client = boto3.client("ecr", region_name=REGION)
+
+            # Delete the AgentCore Runtime
+            # print("  🗑️  Deleting AgentCore Runtime...")
+            runtimes = agentcore_control_client.list_agent_runtimes()
+            for runtime in runtimes["agentRuntimes"]:
+                response = agentcore_control_client.delete_agent_runtime(
+                    agentRuntimeId=runtime["agentRuntimeId"]
+                )
+                print(f"  ✅ Agent runtime deleted: {response['status']}")
+
+>>>>>>> b980282 (chore (workshop-e2e): update toolkit version and update cleanup resources step (#466))
         # Delete the ECR repository
         print("  🗑️  Deleting ECR repository...")
         repositories = ecr_client.describe_repositories()
